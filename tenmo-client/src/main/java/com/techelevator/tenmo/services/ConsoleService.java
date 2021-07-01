@@ -80,7 +80,6 @@ public class ConsoleService {
 	public void showBalance(List<Account> account ){
 		for(int i = 0; i < account.size(); i++) {
 			System.out.println("Your current account balance is: $" + account.get(i).getBalance());
-			break;
 		}
 
 	}

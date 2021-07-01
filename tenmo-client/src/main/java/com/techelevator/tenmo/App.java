@@ -74,7 +74,7 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 
 	private void viewCurrentBalance() {
 		// TODO Auto-generated method stub
-		List<Account> accounts = accountService.getAllAccounts();
+		List<Account> accounts = accountService.getAllAccounts(currentUser.getUser());
 		console.showBalance(accounts);
 		
 	}
@@ -146,6 +146,7 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 			UserCredentials credentials = collectUserCredentials();
 		    try {
 				currentUser = authenticationService.login(credentials);
+				System.out.println(currentUser);
 			} catch (AuthenticationServiceException e) {
 				System.out.println("LOGIN ERROR: "+e.getMessage());
 				System.out.println("Please attempt to login again.");

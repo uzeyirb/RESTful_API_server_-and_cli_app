@@ -1,12 +1,10 @@
 package com.techelevator.tenmo.daos;
 
-import com.techelevator.tenmo.auth.model.User;
 import com.techelevator.tenmo.models.Account;
 import org.junit.*;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -42,9 +40,9 @@ public class JDBCAccountDAOIntegrationTest {
     @Test
 
     public void get_all_accounts(){
-        List<Account> originalAccounts = accountDAO.getAllAccount();
+        List<Account> originalAccounts = accountDAO.list();
         addAccount(new Account(2005, 1001, 10.0 ));
-        List<Account> newAccount = accountDAO.getAllAccount();
+        List<Account> newAccount = accountDAO.list();
         Assert.assertEquals(originalAccounts.size() + 1, newAccount.size());
 
     }
