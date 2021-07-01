@@ -39,6 +39,11 @@ public class JDBCAccountDAO implements AccountDAO{
         return accounts;
     }
 
+    @Override
+    public Account getUserAccount(String username) {
+        return null;
+    }
+
     private Account mapRowToAccount(SqlRowSet rows){
         Account account = new Account();
         account.setAccountId(rows.getLong("account_id"));

@@ -4,7 +4,11 @@ import com.techelevator.tenmo.auth.models.AuthenticatedUser;
 import com.techelevator.tenmo.auth.models.UserCredentials;
 import com.techelevator.tenmo.auth.services.AuthenticationService;
 import com.techelevator.tenmo.auth.services.AuthenticationServiceException;
+import com.techelevator.tenmo.models.Account;
+import com.techelevator.tenmo.services.AccountService;
 import com.techelevator.tenmo.services.ConsoleService;
+
+import java.util.List;
 
 public class App {
 
@@ -25,6 +29,7 @@ private static final String API_BASE_URL = "http://localhost:8080/";
     private AuthenticatedUser currentUser;
     private ConsoleService console;
     private AuthenticationService authenticationService;
+    private AccountService accountService = new AccountService(API_BASE_URL);
 
     public static void main(String[] args) {
     	App app = new App(new ConsoleService(System.in, System.out), new AuthenticationService(API_BASE_URL));
@@ -69,6 +74,8 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 
 	private void viewCurrentBalance() {
 		// TODO Auto-generated method stub
+		List<Account> accounts = accountService.getAllAccounts();
+		console.showBalance(accounts);
 		
 	}
 

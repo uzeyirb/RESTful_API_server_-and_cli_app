@@ -1,9 +1,12 @@
 package com.techelevator.tenmo.services;
 
 
+import com.techelevator.tenmo.models.Account;
+
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleService {
@@ -72,5 +75,13 @@ public class ConsoleService {
 			}
 		} while(result == null);
 		return result;
+	}
+
+	public void showBalance(List<Account> account ){
+		for(int i = 0; i < account.size(); i++) {
+			System.out.println("Your current account balance is: $" + account.get(i).getBalance());
+			break;
+		}
+
 	}
 }

@@ -49,9 +49,16 @@ public class JDBCAccountDAOIntegrationTest {
 
     }
 
+
+
+
+
     private void addAccount(Account account){
         //INSERT INTO accounts (account_id, user_id, balance) VALUES (1110, (SELECT user_id FROM users WHERE user_id = 1001), 0)
         String sql = "INSERT INTO accounts (account_id, user_id, balance) VALUES (?, (SELECT user_id FROM users WHERE user_id = ?), ?)";
         jdbcTemplate.update(sql, account.getAccountId(), account.getUserId(), account.getBalance());
+
     }
+
+
 }
