@@ -12,4 +12,5 @@ public interface AccountDAO {
     Account get(long id);
     Account transfer(Transfer transfer);
     Account updateBalance(long accountId, Double amount);
+    List<Account> getAllAccountExceptSender(long userId);
 }

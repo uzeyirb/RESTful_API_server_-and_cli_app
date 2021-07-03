@@ -78,6 +78,17 @@ public class JdbcUserDAO implements UserDAO {
 
         return true;
     }
+    //
+    @Override
+    public List<User> findAllExceptUser(long userId) {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT user_id, username, password_hash FROM users WHERE user_id != ?";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userId);
+        while(results.next()) {
+             users.add(mapRowToUser(results));
+        }
+        return users;
+    }
 
     private User mapRowToUser(SqlRowSet rs) {
         User user = new User();

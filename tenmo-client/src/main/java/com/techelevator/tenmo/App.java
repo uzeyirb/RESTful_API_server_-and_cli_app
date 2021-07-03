@@ -1,12 +1,16 @@
 package com.techelevator.tenmo;
 
 import com.techelevator.tenmo.auth.models.AuthenticatedUser;
+import com.techelevator.tenmo.auth.models.User;
 import com.techelevator.tenmo.auth.models.UserCredentials;
 import com.techelevator.tenmo.auth.services.AuthenticationService;
 import com.techelevator.tenmo.auth.services.AuthenticationServiceException;
 import com.techelevator.tenmo.models.Account;
+import com.techelevator.tenmo.models.Transfer;
 import com.techelevator.tenmo.services.AccountService;
 import com.techelevator.tenmo.services.ConsoleService;
+import com.techelevator.tenmo.services.TransferService;
+import com.techelevator.tenmo.services.UserService;
 
 import java.util.List;
 
@@ -27,6 +31,8 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 	private static final String[] MAIN_MENU_OPTIONS = { MAIN_MENU_OPTION_VIEW_BALANCE, MAIN_MENU_OPTION_SEND_BUCKS, MAIN_MENU_OPTION_VIEW_PAST_TRANSFERS, MAIN_MENU_OPTION_REQUEST_BUCKS, MAIN_MENU_OPTION_VIEW_PENDING_REQUESTS, MAIN_MENU_OPTION_LOGIN, MENU_OPTION_EXIT };
 	
     private AuthenticatedUser currentUser;
+    private UserService userService = new UserService(API_BASE_URL);
+    private TransferService transferService = new TransferService(API_BASE_URL);
     private ConsoleService console;
     private AuthenticationService authenticationService;
     private AccountService accountService = new AccountService(API_BASE_URL);
@@ -39,6 +45,7 @@ private static final String API_BASE_URL = "http://localhost:8080/";
     public App(ConsoleService console, AuthenticationService authenticationService) {
 		this.console = console;
 		this.authenticationService = authenticationService;
+
 	}
 
 	public void run() {
@@ -76,6 +83,7 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 		// TODO Auto-generated method stub
 		List<Account> accounts = accountService.getAllAccounts(currentUser.getUser());
 		console.showBalance(accounts);
+		System.out.println(currentUser.getUser().getId());// delete this
 		
 	}
 
@@ -91,7 +99,10 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 
 	private void sendBucks() {
 		// TODO Auto-generated method stub
-		
+		List<User> users = userService.getAllUsers(currentUser.getUser());
+		Transfer transfer = console.showTransfer(users, currentUser.getUser());
+		System.out.println(transfer);
+		System.out.println(transferService.transfer(transfer));
 	}
 
 	private void requestBucks() {
@@ -146,7 +157,7 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 			UserCredentials credentials = collectUserCredentials();
 		    try {
 				currentUser = authenticationService.login(credentials);
-				System.out.println(currentUser);
+
 			} catch (AuthenticationServiceException e) {
 				System.out.println("LOGIN ERROR: "+e.getMessage());
 				System.out.println("Please attempt to login again.");

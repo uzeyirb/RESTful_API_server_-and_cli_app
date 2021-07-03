@@ -13,4 +13,7 @@ public interface UserDAO {
     int findIdByUsername(String username);
 
     boolean create(String username, String password);
+
+    List<User> findAllExceptUser(long userId);
+
 }
