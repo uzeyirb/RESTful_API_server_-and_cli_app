@@ -5,12 +5,12 @@ import com.techelevator.tenmo.auth.models.User;
 import com.techelevator.tenmo.auth.models.UserCredentials;
 import com.techelevator.tenmo.auth.services.AuthenticationService;
 import com.techelevator.tenmo.auth.services.AuthenticationServiceException;
+
+
 import com.techelevator.tenmo.models.Account;
 import com.techelevator.tenmo.models.Transfer;
-import com.techelevator.tenmo.services.AccountService;
-import com.techelevator.tenmo.services.ConsoleService;
-import com.techelevator.tenmo.services.TransferService;
-import com.techelevator.tenmo.services.UserService;
+import com.techelevator.tenmo.services.*;
+
 
 import java.util.List;
 
@@ -36,8 +36,10 @@ private static final String API_BASE_URL = "http://localhost:8080/";
     private ConsoleService console;
     private AuthenticationService authenticationService;
     private AccountService accountService = new AccountService(API_BASE_URL);
+    private AccountService account;
 
-    public static void main(String[] args) {
+
+    public static void main(String[] args)  {
     	App app = new App(new ConsoleService(System.in, System.out), new AuthenticationService(API_BASE_URL));
     	app.run();
     }
@@ -48,7 +50,7 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 
 	}
 
-	public void run() {
+	public void run()  {
 		System.out.println("*********************");
 		System.out.println("* Welcome to TEnmo! *");
 		System.out.println("*********************");
@@ -57,7 +59,7 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 		mainMenu();
 	}
 
-	private void mainMenu() {
+	private void mainMenu()  {
 		while(true) {
 			String choice = (String)console.getChoiceFromOptions(MAIN_MENU_OPTIONS);
 			if(MAIN_MENU_OPTION_VIEW_BALANCE.equals(choice)) {
@@ -79,7 +81,7 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 		}
 	}
 
-	private void viewCurrentBalance() {
+	private void viewCurrentBalance()  {
 		// TODO Auto-generated method stub
 		List<Account> accounts = accountService.getAllAccounts(currentUser.getUser());
 		console.showBalance(accounts);
@@ -89,7 +91,10 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 
 	private void viewTransferHistory() {
 		// TODO Auto-generated method stub
-		
+		List<Transfer> transfers = transferService.getAllTransfers();
+		List<User> users = userService.getAllUsers(currentUser.getUser());
+		console.showTransferList(transfers, users);
+
 	}
 
 	private void viewPendingRequests() {
@@ -100,9 +105,9 @@ private static final String API_BASE_URL = "http://localhost:8080/";
 	private void sendBucks() {
 		// TODO Auto-generated method stub
 		List<User> users = userService.getAllUsers(currentUser.getUser());
-		Transfer transfer = console.showTransfer(users, currentUser.getUser());
-		System.out.println(transfer);
-		System.out.println(transferService.transfer(transfer));
+		Transfer transfer = console.showSendBuck(users, currentUser.getUser());
+		System.out.println(transfer); // delete after done
+		System.out.println(transferService.transfer(transfer)); // delete after done
 	}
 
 	private void requestBucks() {

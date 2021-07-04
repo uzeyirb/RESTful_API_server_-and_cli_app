@@ -2,24 +2,51 @@ package com.techelevator.tenmo.models;
 
 public class Transfer {
 
-    private long toUser;
-    private long fromUser;
+    private long transferId;
+    private long transferTypeId;
+    private long transferStatusTypeId;
+    private long toAccount;
+    private long fromAccount;
     private Double amount;
 
-    public long getToUser() {
-        return toUser;
+    public long getTransferId() {
+        return transferId;
     }
 
-    public void setToUser(long toUser) {
-        this.toUser = toUser;
+    public void setTransferId(long transferId) {
+        this.transferId = transferId;
     }
 
-    public long getFromUser() {
-        return fromUser;
+    public long getTransferTypeId() {
+        return transferTypeId;
     }
 
-    public void setFromUser(long fromUser) {
-        this.fromUser = fromUser;
+    public void setTransferTypeId(long transferTypeId) {
+        this.transferTypeId = transferTypeId;
+    }
+
+    public long getTransferStatusTypeId() {
+        return transferStatusTypeId;
+    }
+
+    public void setTransferStatusTypeId(long transferStatusTypeId) {
+        this.transferStatusTypeId = transferStatusTypeId;
+    }
+
+    public long getToAccount() {
+        return toAccount;
+    }
+
+    public void setToAccount(long toAccount) {
+        this.toAccount = toAccount;
+    }
+
+    public long getFromAccount() {
+        return fromAccount;
+    }
+
+    public void setFromAccount(long fromAccount) {
+        this.fromAccount = fromAccount;
     }
 
     public Double getAmount() {
@@ -28,14 +55,5 @@ public class Transfer {
 
     public void setAmount(Double amount) {
         this.amount = amount;
-    }
-
-    @Override
-    public String toString() {
-        return "Transfer{" +
-                "toUser=" + toUser +
-                ", fromUser=" + fromUser +
-                ", amount=" + amount +
-                '}';
     }
 }

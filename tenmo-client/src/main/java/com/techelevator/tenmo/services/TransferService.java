@@ -3,7 +3,6 @@ package com.techelevator.tenmo.services;
 import com.techelevator.tenmo.auth.models.User;
 import com.techelevator.tenmo.models.Account;
 import com.techelevator.tenmo.models.Transfer;
-import io.cucumber.java.bs.A;
 import org.springframework.web.client.RestTemplate;
 
 import java.lang.reflect.Array;
@@ -29,6 +28,11 @@ public class TransferService {
     public Account transfer(Transfer transfer){
         Account account = restTemplate.postForObject(apiUrl + "/account/transfer", transfer,  Account.class);
         return account;
+    }
+
+    public List<Transfer> getAllTransfers(){
+        Transfer[] transfers = restTemplate.getForObject(apiUrl + "/account/transfer", Transfer[].class);
+        return Arrays.asList(transfers);
     }
 
 }

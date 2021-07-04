@@ -74,24 +74,24 @@ public class JDBCAccountDAO implements AccountDAO{
     public Account transfer(Transfer transfer) {
         System.out.println("transfer started " + transfer);
 
-        Account toAccount =updateBalance(transfer.getToUser(), transfer.getAmount() );
-        Account fromAccount = updateBalance(transfer.getFromUser(), transfer.getAmount() * (-1));
+        Account toAccount =updateBalance(transfer.getToAccount(), transfer.getAmount() );
+        Account fromAccount = updateBalance(transfer.getFromAccount(), transfer.getAmount() * (-1));
         createTransferHistory(fromAccount, toAccount, transfer.getAmount());
-        return get(transfer.getFromUser());
+        return get(transfer.getFromAccount());
 
     }
 
     public void createTransferHistory(Account fromAccount , Account toAccount, Double amount){
-        //INSERT INTO transfers (transfer_id, transfer_type_id, transfer_status_id, account_from, account_to, amount) VALUES (?, ?, ?, ?, ?, ?);
-        //String sql = "INSERT INTO transfers (transfer_type_id, transfer_status_id, account_from, account_to, amount) VALUES (?, ?, ?, ?, ?) RETURNING transferId";
-        String sql = "INSERT INTO transfers (transfer_id, transfer_type_id, transfer_status_id, account_from, account_to, amount) VALUES (DEFAULT, ?, ?, ?, ?, ?)";
 
-        System.out.println("seokfnonf" +fromAccount + " " + toAccount+ " " + amount);
-        Integer transferId;
+        String sql = "INSERT INTO transfers ( transfer_id, transfer_type_id, transfer_status_id, account_from, account_to, amount) VALUES (DEFAULT, ?, ?, ?, ?, ?) returning transfer_id";
+
+        System.out.println("seokfnonf" +fromAccount + " " + toAccount+ " " + amount); //delete this one after done
+        //Integer transferId;
         try {
-            transferId = jdbcTemplate.queryForObject(sql, Integer.class, "2", "1", "",  fromAccount.getAccountId(), toAccount.getAccountId(), amount );
-        } catch (DataAccessException e) {
+            jdbcTemplate.queryForObject(sql, Integer.class, 2, 1,   fromAccount.getAccountId(), toAccount.getAccountId(), amount );
 
+        } catch (DataAccessException e) {
+            System.out.println("DataAccessException" + e.getMessage());
         }
 
 
